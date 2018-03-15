@@ -1,37 +1,32 @@
-baton = require "baton"
-mymath = require "mymath"
-color = require "color"
-img = require "img"
-map = require "map"
-pathfinder = require "pathfinder"
-pawnmanager = require "pawnmanager"
-pawn = require "pawn"
-turnmanager = require "turnmanager"
+require "requires"
 
 function love.load()
 	ctime = love.timer.getTime()
 
-	control_bindings = {
-		-- camera controls
-		left1 = {'key:left', 'axis:rightx-'},
-		right1 = {'key:right', 'axis:rightx+'},
-		up1 = {'key:up', 'axis:righty-'},
-		down1 = {'key:down', 'axis:righty+'},
-		-- movement
-		left2 = {'key:a', 'button:dpleft'},
-		right2 = {'key:d', 'button:dpright'},
-		up2 = {'key:w', 'button:dpup'},
-		down2 = {'key:s', 'button:dpdown'},
-		-- buttons
-		a = {'key:space', 'button:a'},
-		x = {'key:t', 'button:x'},
-		y = {'key:r', 'button:y'},
+	controller = controls.setup()
 
-		menu = {'key:escape', 'button:start'},
-		view = {'key:q', 'button:back'},
-	}
-	controller = baton.new(control_bindings) -- set controller.joystick to a Joystick later
-	controller.deadzone = 0.2
+	-- baton.new {
+	-- 	controls = {
+	-- 		-- camera controls
+	-- 		left1 = {'key:left', 'axis:rightx-'},
+	-- 		right1 = {'key:right', 'axis:rightx+'},
+	-- 		up1 = {'key:up', 'axis:righty-'},
+	-- 		down1 = {'key:down', 'axis:righty+'},
+	-- 		-- movement
+	-- 		left2 = {'key:a', 'button:dpleft'},
+	-- 		right2 = {'key:d', 'button:dpright'},
+	-- 		up2 = {'key:w', 'button:dpup'},
+	-- 		down2 = {'key:s', 'button:dpdown'},
+	-- 		-- buttons
+	-- 		a = {'key:space', 'button:a'},
+	-- 		x = {'key:t', 'button:x'},
+	-- 		y = {'key:r', 'button:y'},
+
+	-- 		menu = {'key:escape', 'button:start'},
+	-- 		view = {'key:q', 'button:back'},
+	-- 	} -- set controller.joystick to a Joystick later
+	-- }
+	-- controller.deadzone = 0.2
 
 	love.window.setMode(0, 0)
 	love.window.setFullscreen(true)
@@ -95,15 +90,15 @@ function love.update(dt)
 		if controller:pressed('menu') then game_state = "menu" end
 		if controller:pressed('view') then map:generate_terrain() end
 
-		cdx = controller:get('right1') - controller:get('left1')
-		cdy = controller:get('down1') - controller:get('up1')
+		cdx, cdy = controller:get('rstick')
 		if cdx ~= 0 or cdy ~= 0 then
 			shift_camera(6 * img.tile_size * dt * cdx, 6 * img.tile_size * dt * cdy)
 		end
-		if controller:pressed('up2') 	then set_cursor(cursor_x,		cursor_y + 1) end
-		if controller:pressed('left2') 	then set_cursor(cursor_x - 1,	cursor_y) end
-		if controller:pressed('down2') 	then set_cursor(cursor_x,		cursor_y - 1) end
-		if controller:pressed('right2') then set_cursor(cursor_x + 1,	cursor_y) end
+
+		if controller:pressed('dp_up')		then set_cursor(cursor_x,		cursor_y + 1) end
+		if controller:pressed('dp_left') 	then set_cursor(cursor_x - 1,	cursor_y) end
+		if controller:pressed('dp_down') 	then set_cursor(cursor_x,		cursor_y - 1) end
+		if controller:pressed('dp_right')	then set_cursor(cursor_x + 1,	cursor_y) end
 
 		if controller:pressed('a') then click_on(cursor_x, cursor_y) end
 		if controller:pressed('x') then
@@ -243,6 +238,13 @@ function set_cursor(x, y)
 		if pathfinder:find_path(x, y) then
 			pathfinder:display_path()
 		end
+
+		pid = map:pawn_at(x, y)
+		if pid then
+			new_message("pid: " .. pid .. " name: " .. pawns[pid].name .. " facing: " .. pawns[pid].facing)
+		else
+			new_message()
+		end
 		redraw = true
 		return true
 	end
@@ -276,7 +278,6 @@ function set_selection(pid)
 	selection_y = py
 	pathfinder:build_move_radius(px, py, pawns[pid].movespeed, pawns[pid].movetype, pawns[pid].faction)
 	pathfinder:display_move_radius()
-	new_message("selected " .. pawns[pid].name .. " facing " .. pawns[pid].facing)
 	map[px][py].underlays.selection = true
 	redraw = true
 end
@@ -297,7 +298,7 @@ function floor_setup()
 
 	pid_list = {}
 	for i = 1, 8 do
-		local pid = pawnmanager.spawn_pawn('abby', 'player')
+		local pid = pawnmanager.spawn_pawn(mymath.choose_random_weighed({abby = 10, bina = 5}), 'abby', 'player')
 		local x, y = map:find_empty_floor()
 		pawns[pid]:move(x, y, false)
 		pawns[pid].facing = love.math.random(6)
@@ -305,7 +306,7 @@ function floor_setup()
 	end
 
 	for i = 1, 8 do
-		local pid = pawnmanager.spawn_pawn('quentin', 'enemy')
+		local pid = pawnmanager.spawn_pawn(mymath.choose_random_weighed({quentin = 10, roger = 5}), 'quentin', 'enemy')
 		local x, y = map:find_empty_floor()
 		pawns[pid]:move(x, y, false)
 		pawns[pid].facing = love.math.random(6)
