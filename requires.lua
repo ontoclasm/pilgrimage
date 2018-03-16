@@ -1,5 +1,6 @@
 autobatch = require "lib/autobatch"
 baton = require "lib/baton"
+Hex = require "lib/Hex"
 
 mymath = require "mymath"
 color = require "color"

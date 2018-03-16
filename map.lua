@@ -1,5 +1,3 @@
-hex = require "hex"
-
 local map = {}
 
 function map:setup(w, h)
@@ -39,11 +37,11 @@ function map:terrain_type(x, y)
 	end
 end
 
-function map:z(x, y)
+function map:elev(x, y)
 	if not self:in_bounds(x, y) then
 		return 0
 	else
-		return self[x][y].z
+		return self[x][y].elev
 	end
 end
 
@@ -55,56 +53,6 @@ function map:pawn_at(x, y)
 	end
 end
 
-function map:disc(cx, cy, r)
-	local region = {}
-	for dx = -r, r do
-		for dy = math.max(-r, -r+dx), math.min(r, r+dx) do
-			if self:in_bounds(cx + dx, cy + dy) then
-				table.insert(region, {x = cx + dx, y = cy + dy})
-			end
-		end
-	end
-
-	return region
-end
-
-function map:neighborhood(cx, cy)
-	return self:disc(cx, cy, 1)
-end
-
-function map:circle(cx, cy, r)
-	local region = {}
-
-	if r == 0 then -- trivial
-		if self:in_bounds(cx, cy) then
-			table.insert(region, {x = cx, y = cy})
-		end
-		return region
-	end
-
-	for dy = -r, 0 do
-		if self:in_bounds(cx - r, cy + dy) then
-			table.insert(region, {x = cx - r, y = cy + dy})
-		end
-	end
-	for dy = 0, r do
-		if self:in_bounds(cx + r, cy + dy) then
-			table.insert(region, {x = cx + r, y = cy + dy})
-		end
-	end
-
-	for dx = -r + 1, r - 1 do
-		if self:in_bounds(cx + dx, cy + math.max(-r, -r+dx)) then
-			table.insert(region, {x = cx + dx, y = cy + math.max(-r, -r+dx)})
-		end
-		if self:in_bounds(cx + dx, cy + math.min(r, r+dx)) then
-			table.insert(region, {x = cx + dx, y = cy + math.min(r, r+dx)})
-		end
-	end
-
-	return region
-end
-
 function map:generate_terrain()
 	-- XXX
 	local noise_x = love.math.random() * 1238.1
@@ -112,21 +60,21 @@ function map:generate_terrain()
 
 	for x=1, self.width do
 		for y=1, self.height do
-			if x-y >= 12 or y-x >= 12 then
+			if x+y <= 12 or x+y >= 36 then
 				self[x][y].terrain = "void"
-				self[x][y].z = 0
+				self[x][y].elev = 0
 			else
 				-- set heights
-				-- self[x][y].z = math.floor(6 - math.sqrt(love.math.random(1,25)))
-				self[x][y].z = 1 + math.floor(5 * math.pow(love.math.noise(noise_x + (x / 17.17) - (y / 34.34), noise_y + (y / 17.17)), 1.5)
-														 + 2 * math.pow(love.math.noise(noise_x - (x / 5.04) + (y / 10.08), noise_y - (y / 5.04)), 1.5))
+				-- self[x][y].elev = math.floor(6 - math.sqrt(love.math.random(1,25)))
+				self[x][y].elev = 1 + math.floor(5 * math.pow(love.math.noise(noise_x + (x / 17.17) + (y / 34.34), noise_y - (y / 17.17)), 1.5)
+															 + 2 * math.pow(love.math.noise(noise_x - (x / 5.04) - (y / 10.08), noise_y + (y / 5.04)), 1.5))
 
 				-- set terrain
-				if self.waterline - self[x][y].z >= 2 then
+				if self.waterline - self[x][y].elev >= 2 then
 					self[x][y].terrain = "depths"
-				elseif self.waterline - self[x][y].z == 1 then
+				elseif self.waterline - self[x][y].elev == 1 then
 					self[x][y].terrain = "shallows"
-				elseif self[x][y].z == self.waterline then
+				elseif self[x][y].elev == self.waterline then
 					self[x][y].terrain = "dirt"
 				elseif mymath.one_chance_in(3) then
 					self[x][y].terrain = "dirt"
@@ -157,8 +105,9 @@ function map:navtype(x, y, movetype, faction)
 		return -1
 	end
 
+	local c = Hex(x,y)
 	for d = 1, 6 do
-		neighbor = hex.adj(x, y, d)
+		neighbor = c:adjacent(d)
 		pid = map:pawn_at(neighbor.x, neighbor.y)
 		if pid and pawns[pid].faction ~= faction then
 			return 2

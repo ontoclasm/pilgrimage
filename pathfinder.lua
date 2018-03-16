@@ -1,5 +1,3 @@
-hex = require "hex"
-
 local pathfinder = { fringes = {}}
 
 function pathfinder:reset()
@@ -14,26 +12,26 @@ function pathfinder:reset()
 	end
 end
 
-function pathfinder:build_move_radius(cx, cy, r, movetype, faction)
+function pathfinder:build_move_radius(origin, r, movetype, faction)
 	self:reset()
-	self.origin = {x=cx,y=cy}
+	self.origin = origin
 	self.radius = r
-	self.fringes[0][hex.hash(cx, cy)] = true
-	self.reached[hex.hash(cx, cy)] = true
+	self.fringes[0][origin:hash()] = true
+	self.reached[origin:hash()] = true
 
-	local c = {}
-	local neighbor = {}
-	local navtype = nil
-	local neighbor_hash = nil
+	local c
+	local neighbor
+	local navtype
+	local neighbor_hash
 	for k = 1, r do
 		for i,_ in pairs(self.fringes[k-1]) do
 			if not self.deadends[i] then
-				c = hex.unhash(i)
-				for d = 1, 6 do
-					neighbor = hex.adj(c.x, c.y, d)
+				c = Hex.unhash(i)
+				for dir = 1, 6 do
+					neighbor = c:adjacent(dir)
 					navtype = map:navtype(neighbor.x, neighbor.y, movetype, faction)
 					if map:in_bounds(neighbor.x, neighbor.y) and navtype ~= -1 then
-						neighbor_hash = hex.hash(neighbor.x, neighbor.y)
+						neighbor_hash = neighbor:hash()
 						if not self.reached[neighbor_hash] then
 							self.reached[neighbor_hash] = true
 							self.fringes[k][neighbor_hash] = true
@@ -48,35 +46,34 @@ function pathfinder:build_move_radius(cx, cy, r, movetype, faction)
 	end
 end
 
-function pathfinder:find_path(tx, ty)
+function pathfinder:find_path(t)
 	if not self.radius then return false end
 	self:clear_path()
 
-	local t_hash = hex.hash(tx, ty)
+	local t_hash = t:hash()
 	if not self.reached[t_hash] then return false end
 
 	local distance = nil
 	for k = 0, self.radius do
 		if self.fringes[k][t_hash] then
 			distance = k
-			self.path[k] = {x = tx, y = ty}
+			self.path[k] = t:clone()
 		end
 		if distance then break end
 	end
 
 	if distance == 0 then return distance end -- that was easy
 
-	local pen = {x = tx, y = ty}
 	local neighbor = {}
 	local neighbor_hash = nil
 	for k = distance - 1, 0, -1 do
 		for d = 1, 6 do
-			neighbor = hex.adj(pen.x, pen.y, d)
+			neighbor = t:adjacent(d)
 			if map:in_bounds(neighbor.x, neighbor.y) then
-				neighbor_hash = hex.hash(neighbor.x, neighbor.y)
+				neighbor_hash = neighbor:hash()
 				if self.fringes[k][neighbor_hash] and not self.deadends[neighbor_hash] then
 					self.path[k] = neighbor
-					pen = neighbor
+					t = neighbor
 					break
 				end
 			end
@@ -87,10 +84,10 @@ function pathfinder:find_path(tx, ty)
 end
 
 function pathfinder:display_move_radius()
-	local c = {}
+	local c
 	for k = 0, self.radius do
 		for i,_ in pairs(self.fringes[k]) do
-			c = hex.unhash(i)
+			c = Hex.unhash(i)
 			map[c.x][c.y].underlays.movement_a = true
 		end
 	end
@@ -99,10 +96,10 @@ end
 
 function pathfinder:clear_move_radius()
 	if self.radius then
-		local c = {}
+		local c
 		for k=0, self.radius do
 			for i,_ in pairs(self.fringes[k]) do
-				c = hex.unhash(i)
+				c = Hex.unhash(i)
 				map[c.x][c.y].underlays.movement_a = nil
 				map[c.x][c.y].underlays.movement_b = nil
 			end

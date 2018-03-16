@@ -98,7 +98,7 @@ function img.draw_terrain_row(y)
 		if map:in_bounds(x,y) then
 			-- draw the hex at x,y
 			local tt = map:terrain_type(x, y)
-			local elev = map:z(x, y)
+			local elev = map:elev(x, y)
 			local hx, hy = img.canvas_pos(x, y)
 			local underlays = map[x][y].underlays
 
@@ -118,16 +118,16 @@ function img.draw_terrain_row(y)
 				end
 			end
 
-			if (not map:in_bounds(x, y+1) and elev >= waterline) or map:z(x, y+1) < elev then
+			if (not map:in_bounds(x-1, y+1) and elev >= waterline) or map:elev(x-1, y+1) < elev then
 				img.tileset_batch[y]:add(img.quads.tileset["hexoutline_nw"], hx, hy - (elev - 1)*img.hex_depth)
 			end
-			if (not map:in_bounds(x+1, y+1) and elev >= waterline) or map:z(x+1, y+1) < elev then
+			if (not map:in_bounds(x, y+1) and elev >= waterline) or map:elev(x, y+1) < elev then
 				img.tileset_batch[y]:add(img.quads.tileset["hexoutline_ne"], hx, hy - (elev - 1)*img.hex_depth)
 			end
-			if (not map:in_bounds(x, y-1) and elev >= waterline) then
+			if (not map:in_bounds(x+1, y-1) and elev >= waterline) then
 				img.tileset_batch[y]:add(img.quads.tileset["hexoutline_se"], hx, hy)
 			end
-			if (not map:in_bounds(x-1, y-1) and elev >= waterline) then
+			if (not map:in_bounds(x, y-1) and elev >= waterline) then
 				img.tileset_batch[y]:add(img.quads.tileset["hexoutline_sw"], hx, hy)
 			end
 
@@ -164,7 +164,7 @@ end
 
 function img.draw_foreground(x, y)
 	local waterline = map.waterline
-	local elev = map:z(x, y)
+	local elev = map:elev(x, y)
 	-- XXX make a function for hx, hy
 	local hx, hy = img.canvas_pos(x, y)
 	local underlays = map[x][y].underlays
@@ -186,13 +186,13 @@ function img.draw_foreground(x, y)
 
 	-- water level
 	if elev < waterline then
-		if map:in_bounds(x-1, y) and map:z(x-1, y) > elev then
-			for z = elev-1, map:z(x-1, y)-2 do
+		if map:in_bounds(x-1, y) and map:elev(x-1, y) > elev then
+			for z = elev-1, map:elev(x-1, y)-2 do
 				love.graphics.draw(img.overlays, img.quads.overlays["hexoutline_w2"], hx, hy - z*img.hex_depth)
 			end
 		end
-		if map:in_bounds(x+1, y) and map:z(x+1, y) > elev then
-			for z = elev-1, map:z(x+1, y)-2 do
+		if map:in_bounds(x+1, y) and map:elev(x+1, y) > elev then
+			for z = elev-1, map:elev(x+1, y)-2 do
 				love.graphics.draw(img.overlays, img.quads.overlays["hexoutline_e2"], hx, hy - z*img.hex_depth)
 			end
 		end
@@ -244,13 +244,13 @@ function img.draw_foreground(x, y)
 		end
 	end
 
-	if map:in_bounds(x-1, y) and map:z(x-1, y) > elev and map:z(x-1, y) >= waterline then
-		for z = elev-1, map:z(x-1, y)-2 do
+	if map:in_bounds(x-1, y) and map:elev(x-1, y) > elev and map:elev(x-1, y) >= waterline then
+		for z = elev-1, map:elev(x-1, y)-2 do
 			love.graphics.draw(img.overlays, img.quads.overlays["hexoutline_w2"], hx, hy - z*img.hex_depth)
 		end
 	end
-	if map:in_bounds(x+1, y) and map:z(x+1, y) > elev and map:z(x+1, y) >= waterline then
-		for z = elev-1, map:z(x+1, y)-2 do
+	if map:in_bounds(x+1, y) and map:elev(x+1, y) > elev and map:elev(x+1, y) >= waterline then
+		for z = elev-1, map:elev(x+1, y)-2 do
 			love.graphics.draw(img.overlays, img.quads.overlays["hexoutline_e2"], hx, hy - z*img.hex_depth)
 		end
 	end
@@ -266,14 +266,14 @@ end
 
 -- get the position on canvas of a given hex
 function img.canvas_pos(x, y)
-	return (x + (map.height-y)/2)*img.hex_width, (map.height-y+4)*img.hex_height
+	return (x + y/2)*img.hex_width, (map.height-y+4)*img.hex_height
 end
 
 function img.canvas_hexcenter(x, y)
 	local hx, hy = img.canvas_pos(x, y)
-	local elev = map:z(x, y)
+	local elev = map:elev(x, y)
 	if elev >= map.waterline then
-		return hx + img.tile_size/2, hy + img.tile_size/2 - 4 - (map:z(x, y) - 1)*img.hex_depth
+		return hx + img.tile_size/2, hy + img.tile_size/2 - 4 - (map:elev(x, y) - 1)*img.hex_depth
 	else
 		return hx + img.tile_size/2, hy + img.tile_size/2 - 2 - (map.waterline - 1)*img.hex_depth
 	end

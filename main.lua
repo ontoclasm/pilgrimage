@@ -109,9 +109,16 @@ function love.update(dt)
 			camera_target_x, camera_target_y = img.canvas_hexcenter(pawns[pid].x, pawns[pid].y)
 		end
 		if controller:pressed('y') then
-			local pid = map:pawn_at(cursor_x, cursor_y)
-			if pid then
-				pawns[pid]:rotate(1)
+			-- local pid = map:pawn_at(cursor_x, cursor_y)
+			-- if pid then
+			-- 	pawns[pid]:rotate(1)
+			-- end
+
+			region = Hex(cursor_x, cursor_y):circle(3)
+			for k,v in pairs(region) do
+				if map:in_bounds(v.x, v.y) then
+					map[v.x][v.y].underlays.nav_node = true
+				end
 			end
 		end
 	end
@@ -149,8 +156,7 @@ function love.draw()
 	love.graphics.clear()
 	love.graphics.setColor(color.rouge)
 	if map:in_bounds(cursor_x, cursor_y) then
-		local h = hex.unhash(hex.hash(cursor_x, cursor_y))
-		love.graphics.print("(" .. h.x .. ", " .. h.y .. ") h:" .. map[h.x][h.y].z - map.waterline, window.w/2 - 160, 10)
+		love.graphics.print(tostring(Hex(cursor_x, cursor_y)) .. " h:" .. map:elev(cursor_x, cursor_y) - map.waterline, window.w/2 - 160, 10)
 	end
 	-- debug msg
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, window.h/2 - 80)
@@ -235,7 +241,7 @@ function set_cursor(x, y)
 			shift_camera_target(cdx, cdy)
 		end
 
-		if pathfinder:find_path(x, y) then
+		if pathfinder:find_path(Hex(x, y)) then
 			pathfinder:display_path()
 		end
 
@@ -259,13 +265,13 @@ function click_on(x, y)
 		if pid then
 			set_selection(pid)
 			camera_target_x, camera_target_y = img.canvas_hexcenter(x,y)
-		elseif selection_pawn and pathfinder.reached[hex.hash(x,y)] then
+		elseif selection_pawn and pathfinder.reached[Hex(x,y):hash()] then
 			pawns[selection_pawn]:move(x, y, true)
 			camera_target_x, camera_target_y = img.canvas_hexcenter(x,y)
 			clear_selection()
 		else
 			clear_selection()
-			new_message("deselected")
+			new_message("deselected, " .. Hex(x,y):length())
 		end
 	end
 end
@@ -276,7 +282,7 @@ function set_selection(pid)
 	px, py = pawns[pid].x, pawns[pid].y
 	selection_x = px
 	selection_y = py
-	pathfinder:build_move_radius(px, py, pawns[pid].movespeed, pawns[pid].movetype, pawns[pid].faction)
+	pathfinder:build_move_radius(Hex(px, py), pawns[pid].movespeed, pawns[pid].movetype, pawns[pid].faction)
 	pathfinder:display_move_radius()
 	map[px][py].underlays.selection = true
 	redraw = true

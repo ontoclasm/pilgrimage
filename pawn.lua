@@ -40,7 +40,7 @@ function pawn:get_sprite()
 			sx = -1
 		end
 
-		if map.waterline - map:z(self.x, self.y) >= 2 then
+		if map.waterline - map:elev(self.x, self.y) >= 2 then
 			return {self.sprite .. "_swim", sx}
 		else
 			return {self.sprite .. "_" .. f, sx}
