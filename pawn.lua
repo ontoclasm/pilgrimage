@@ -1,9 +1,9 @@
 local pawn = { last_id = 0 }
+pawn.__index = pawn
 
 function pawn:new(o)
 	o = o or {}
 	setmetatable(o, self)
-	self.__index = self
 	return o
 end
 
@@ -16,8 +16,19 @@ function pawn:move(x, y, walk)
 		self.x = x
 		self.y = y
 		map[x][y].pawn = self.id
+		self.on_map = true
 		redraw = true
 	end
+end
+
+function pawn:remove_from_map()
+	if map:in_bounds(self.x, self.y) then
+		map[self.x][self.y].pawn = nil
+	end
+	self.x = nil
+	self.y = nil
+	self.on_map = false
+	redraw = true
 end
 
 function pawn:rotate(df)

@@ -247,7 +247,7 @@ function set_cursor(x, y)
 
 		pid = map:pawn_at(x, y)
 		if pid then
-			new_message("pid: " .. pid .. " name: " .. pawns[pid].name .. " facing: " .. pawns[pid].facing)
+			new_message(pid .. ": " .. pawns[pid].name .. ", " .. pawns[pid].gender .. " " .. pawns[pid].faith .. " " .. pawns[pid].job)
 		else
 			new_message()
 		end
@@ -304,7 +304,7 @@ function floor_setup()
 
 	pid_list = {}
 	for i = 1, 8 do
-		local pid = pawnmanager.spawn_pawn(mymath.choose_random_weighed({abby = 10, bina = 5}), 'abby', 'player')
+		local pid = pawnmanager.create_pawn({faction = 'player'})
 		local x, y = map:find_empty_floor()
 		pawns[pid]:move(x, y, false)
 		pawns[pid].facing = love.math.random(6)
@@ -312,7 +312,7 @@ function floor_setup()
 	end
 
 	for i = 1, 8 do
-		local pid = pawnmanager.spawn_pawn(mymath.choose_random_weighed({quentin = 10, roger = 5}), 'quentin', 'enemy')
+		local pid = pawnmanager.create_pawn({faction = 'enemy'})
 		local x, y = map:find_empty_floor()
 		pawns[pid]:move(x, y, false)
 		pawns[pid].facing = love.math.random(6)
