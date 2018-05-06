@@ -33,7 +33,7 @@ function love.load()
 	window = {}
 	window.w, window.h = love.graphics.getDimensions()
 
-	love.graphics.setBackgroundColor(0, 50, 50)
+	love.graphics.setBackgroundColor(0, 0.1, 0.1)
 	game_canvas = love.graphics.newCanvas()
 	game_canvas:setFilter("linear", "nearest")
 	gui_canvas = love.graphics.newCanvas()

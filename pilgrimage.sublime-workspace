@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"pawn",
+				"pawnmanager"
+			],
+			[
 				"turn",
 				"turnmanager"
 			],
@@ -35,7 +39,68 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 8715,
+				"buffer_size": 8817,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "color.lua",
+			"settings":
+			{
+				"buffer_size": 379,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "img.lua",
+			"settings":
+			{
+				"buffer_size": 10562,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "lib/Hex.lua",
+			"settings":
+			{
+				"buffer_size": 3277,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "map.lua",
+			"settings":
+			{
+				"buffer_size": 4051,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mymath.lua",
+			"settings":
+			{
+				"buffer_size": 2085,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "pathfinder.lua",
+			"settings":
+			{
+				"buffer_size": 2842,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "requires.lua",
+			"settings":
+			{
+				"buffer_size": 369,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -44,7 +109,7 @@
 			"file": "pawn.lua",
 			"settings":
 			{
-				"buffer_size": 1477,
+				"buffer_size": 1678,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -53,7 +118,7 @@
 			"file": "pawnmanager.lua",
 			"settings":
 			{
-				"buffer_size": 479,
+				"buffer_size": 1955,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -66,43 +131,6 @@
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "local turnmanager = {}"
-			}
-		},
-		{
-			"file": "map.lua",
-			"settings":
-			{
-				"buffer_size": 5100,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "pathfinder.lua",
-			"settings":
-			{
-				"buffer_size": 3006,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "local pathfinder = {}"
-			}
-		},
-		{
-			"file": "hex.lua",
-			"settings":
-			{
-				"buffer_size": 669,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "img.lua",
-			"settings":
-			{
-				"buffer_size": 10527,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -173,8 +201,25 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/C/Users/Sam/Documents/GitHub/pilgrimage",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/lib"
+	],
 	"file_history":
 	[
+		"/C/Users/Sam/AppData/Local/Temp/lib.lua",
+		"/C/Users/Sam/Documents/GitHub/parallax/lib/Vector.lua",
+		"/C/Users/Sam/Documents/GitHub/Hex/Hex.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/Hex.lua",
+		"/C/Users/Sam/Documents/GitHub/parallax/mymath.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/map.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/pathfinder.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/hex.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/controls.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/requires.lua",
+		"/C/Users/Sam/Documents/GitHub/pilgrimage/img.lua",
+		"/C/Users/Sam/Documents/GitHub/parallax/controls.lua",
 		"/M/Dropbox/Public/love/rouge/conf.lua",
 		"/M/Dropbox/Public/love/rouge/enemy_data.lua",
 		"/C/Users/Sam/AppData/Roaming/Sublime Text 3/Packages/Color Scheme - Default/ontoclasm.tmTheme",
@@ -269,13 +314,14 @@
 	],
 	"find":
 	{
-		"height": 46.0
+		"height": 32.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 117.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -283,6 +329,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"disc",
+			"z",
+			"alt",
+			"z",
+			"hex",
+			"build_move_radius",
+			"hex",
+			"dir",
 			"joyst",
 			"hexce",
 			"move_map",
@@ -347,6 +401,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"elev",
+			"Hex",
 			"shift_camera_target",
 			"shift_camera",
 			"overlays, img.overlaysq",
@@ -395,7 +451,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -404,15 +460,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8715,
+						"buffer_size": 8817,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1845,
-								1845
+								6585,
+								6585
 							]
 						],
 						"settings":
@@ -513,33 +569,32 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1524.0,
+						"translation.y": 5491.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "pawn.lua",
-					"semi_transient": false,
+					"file": "color.lua",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 1477,
+						"buffer_size": 379,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								409,
-								409
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -550,19 +605,48 @@
 				},
 				{
 					"buffer": 2,
-					"file": "pawnmanager.lua",
+					"file": "img.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 479,
+						"buffer_size": 10562,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								479,
-								479
+								3329,
+								3329
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2006.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "lib/Hex.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3277,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								696,
+								696
 							]
 						],
 						"settings":
@@ -574,11 +658,184 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
+					"file": "map.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4051,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1322,
+								1543
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 19.0,
+						"translation.y": 1224.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "mymath.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2085,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2021,
+								2021
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1276.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "pathfinder.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2842,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2505,
+								2566
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "requires.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 369,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								87,
+								87
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "pawn.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1678,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								121,
+								121
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1368.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "pawnmanager.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1955,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1650,
+								1650
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1382.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
 					"file": "turnmanager.lua",
 					"semi_transient": false,
 					"settings":
@@ -603,124 +860,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "map.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5100,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								722,
-								722
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "pathfinder.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3006,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								659,
-								659
-							]
-						],
-						"settings":
-						{
-							"auto_name": "local pathfinder = {}",
-							"syntax": "Packages/LuaExtended/LuaExtended.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2088.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "hex.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 669,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								657,
-								657
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "img.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10527,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10187,
-								10187
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5870.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -732,7 +872,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 45.0
 	},
 	"layout":
 	{
@@ -769,7 +909,7 @@
 	"project": "pilgrimage.sublime-project",
 	"replace":
 	{
-		"height": 83.0
+		"height": 60.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -812,9 +952,9 @@
 	{
 	},
 	"show_minimap": true,
-	"show_open_files": true,
+	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 138.0,
 	"status_bar_visible": false,
 	"template_settings":

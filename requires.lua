@@ -1,4 +1,3 @@
-autobatch = require "lib/autobatch"
 baton = require "lib/baton"
 Hex = require "lib/Hex"
 
