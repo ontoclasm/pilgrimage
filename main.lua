@@ -119,6 +119,7 @@ function love.update(dt)
 				if map:in_bounds(v.x, v.y) then
 					map[v.x][v.y].underlays.nav_node = true
 				end
+				redraw = true
 			end
 		end
 	end
@@ -175,11 +176,6 @@ function love.draw()
 
 	love.graphics.setColor(color.white)
 	love.graphics.draw(gui_canvas, 0, 0, 0, 2)
-end
-
-function love.joystickadded(joystick)
-	controller.joystick = joystick
-	new_message("joystick added")
 end
 
 function love.focus(f)
