@@ -54,11 +54,11 @@ function Hex.__eq(a, b)
 end
 
 function Hex.__tostring(a)
-	return "(" .. a.x - 12 .. ", " .. a.y - 12 .. ", " .. -a.x - a.y + 24 .. ")"
+	return "(" .. a.x .. ", " .. a.y .. ", " .. -a.x - a.y .. ")"
 end
 
 function Hex:add_dir(dir, m)
-	return self.x + hex_dir[dir] * m
+	return self + hex_dir[dir] * m
 end
 
 function Hex:adjacent(dir)
