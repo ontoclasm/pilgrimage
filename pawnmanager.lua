@@ -35,7 +35,7 @@ function pawnmanager.create_pawn(o)
 	if not o.movespeed then
 		o.movespeed = 6
 	end
-	if not o.gender then
+	if not o.movetype then
 		o.movetype = "walk"
 	end
 
